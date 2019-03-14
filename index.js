@@ -51,7 +51,7 @@ server.on('request', async (req, res) => {
 
       createReadStream(path.resolve(__dirname, 'files', filename))
         .on('error', err => {
-          if (err.errno === -4058 || err.errno === -4068) {
+          if (err.code === 'EISDIR' || err.code === 'ENOENT') {
             res.writeHead(404, {
               'Content-Type': 'text/html'
             });
