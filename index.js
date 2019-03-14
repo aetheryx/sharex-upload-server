@@ -1,4 +1,4 @@
-const mimeTypes = require('./mimetypes.json');
+const mimeTypes = require('./mimeTypes.json');
 const config = require('./config.json');
 const crypto = require('crypto');
 const http = require('http');
