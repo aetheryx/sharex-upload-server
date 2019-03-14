@@ -1,0 +1,20 @@
+{
+  "name": "sharex-upload-server",
+  "version": "1.0.0",
+  "description": "A lightweight, dependency-less ShareX upload server in Node.js",
+  "main": "index.js",
+  "scripts": {
+    "generate-key": "node -e \"console.log('Here\\'s your random key:', require('crypto').randomBytes(32).toString('base64'))\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aetheryx/sharex-upload-server.git"
+  },
+  "keywords": [ "file-server", "sharex" ],
+  "author": "aetheryx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aetheryx/sharex-upload-server/issues"
+  },
+  "homepage": "https://github.com/aetheryx/sharex-upload-server#readme"
+}
