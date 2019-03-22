@@ -26,7 +26,9 @@ server.on('request', async (req, res) => {
         }));
       }
 
-      const filename = await getFilename(mimeTypes[req.headers['content-type']]);
+      const filename = await getFilename(
+        mimeTypes.find(([ type ]) => type === req.headers['content-type'])[1]
+      );
 
       req.pipe(
         createWriteStream(
@@ -47,9 +49,14 @@ server.on('request', async (req, res) => {
     }
 
     case 'GET': {
-      const filename = req.url.slice(1);
+      const filePath = path.resolve(__dirname, 'files', req.url.slice(1));
 
-      createReadStream(path.resolve(__dirname, 'files', filename))
+      createReadStream(filePath)
+        .on('open', () => {
+          res.writeHead(200, {
+            'Content-Type': mimeTypes.find(([ , ext ]) => ext === path.extname(filePath))[0]
+          });
+        })
         .on('error', err => {
           if (err.code === 'EISDIR' || err.code === 'ENOENT') {
             res.writeHead(404, {
@@ -65,7 +72,6 @@ server.on('request', async (req, res) => {
         })
         .pipe(res)
         .on('end', () => {
-          res.writeHead(200);
           res.end();
         });
 
