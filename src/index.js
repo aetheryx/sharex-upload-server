@@ -1,15 +1,16 @@
 const mimeTypes = require('./mimeTypes.json');
-const config = require('./config.json');
+const config = require('../config.json');
 const crypto = require('crypto');
 const http = require('http');
 const path = require('path');
 const { promises: fs, createReadStream, createWriteStream } = require('fs');
 
 const server = http.createServer();
+const filesDirectory = path.resolve(__dirname, '..', 'files');
 
 const getFilename = (extension) => {
   const filename = crypto.randomBytes(config.fileIDLength / 2).toString('hex') + extension;
-  return fs.access(path.resolve(__dirname, 'files', filename))
+  return fs.access(path.resolve(filesDirectory, filename))
     .then(() => getFilename(extension))
     .catch(() => filename);
 };
@@ -32,7 +33,7 @@ server.on('request', async (req, res) => {
 
       req.pipe(
         createWriteStream(
-          path.resolve(__dirname, 'files', filename)
+          path.resolve(filesDirectory, filename)
         )
       );
 
@@ -57,7 +58,7 @@ server.on('request', async (req, res) => {
         return res.end('<h1>400 Bad Request</h1><br><h3>Request path may not include <code>..</code></h3>')
       }
 
-      const filePath = path.resolve(__dirname, 'files', requestPath);
+      const filePath = path.resolve(filesDirectory, requestPath);
       const contentType = mimeTypes.find(([ , ext ]) => ext === path.extname(filePath));
 
       createReadStream(filePath)
