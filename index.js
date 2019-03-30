@@ -49,31 +49,37 @@ server.on('request', async (req, res) => {
     }
 
     case 'GET': {
-      const filePath = path.resolve(__dirname, 'files', req.url.slice(1));
+      const requestPath = req.url.slice(1);
+      if (requestPath.includes('..')) {
+        res.writeHead(400, {
+          'Content-Type': 'text/html'
+        });
+        return res.end('<h1>400 Bad Request</h1><br><h3>Request path may not include <code>..</code></h3>')
+      }
+
+      const filePath = path.resolve(__dirname, 'files', requestPath);
+      const contentType = mimeTypes.find(([ , ext ]) => ext === path.extname(filePath));
 
       createReadStream(filePath)
         .on('open', () => {
-          res.writeHead(200, {
-            'Content-Type': mimeTypes.find(([ , ext ]) => ext === path.extname(filePath))[0]
-          });
+          if (contentType) {
+            res.setHeader('Content-Type', contentType[0]);
+          }
         })
-        .on('error', err => {
+        .on('error', (err) => {
           if (err.code === 'EISDIR' || err.code === 'ENOENT') {
             res.writeHead(404, {
               'Content-Type': 'text/html'
             });
-            return res.end('<h1>404 Not Found</h1>');
+            res.end('<h1>404 Not Found</h1>');
           } else {
             res.writeHead(500, {
               'Content-Type': 'text/html'
             });
-            return res.end(`<h1>Internal Server Error</h1><br><h3>${err.message}</h3>`);
+            res.end(`<h1>Internal Server Error</h1><br><h3>${err.message}</h3>`);
           }
         })
-        .pipe(res)
-        .on('end', () => {
-          res.end();
-        });
+        .pipe(res);
 
       break;
     }
