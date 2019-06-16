@@ -6,7 +6,7 @@ const config = require('../../config.json');
 function createFile (ext) {
   const id = rand(config.fileIDLength);
   if (files.has(id)) {
-    return getFilename(ext);
+    return createFile(ext);
   }
 
   const data = {
