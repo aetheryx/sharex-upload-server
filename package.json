@@ -4,7 +4,7 @@
   "description": "A lightweight, dependency-less ShareX upload server in Node.js",
   "main": "index.js",
   "scripts": {
-    "generate-key": "node -e \"const key = require('crypto').randomBytes(32).toString('hex'); require('fs').writeFileSync('./config.json', JSON.stringify({ ...require('./config.json'), key }, '', '  ')); console.log('Here\\'s your key:', key);"
+    "generate-key": "node -e \"const key = require('crypto').randomBytes(32).toString('hex'); require('fs').writeFileSync('./config.json', JSON.stringify({ ...require('./config.json'), key }, '', '  ')); console.log('Here\\'s your key:', key);\""
   },
   "repository": {
     "type": "git",
