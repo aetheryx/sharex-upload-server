@@ -2,7 +2,10 @@ const mimeTypes = require('../util/mimeTypes.json');
 const { createReadStream } = require('fs');
 
 module.exports = async (req, res, files) => {
-  const requestPath = req.url.slice(1);
+  const requestPath = decodeURIComponent(req.url) === req.url
+    ? req.url.slice(1)
+    : decodeURIComponent(req.url.slice(1));
+
   if (requestPath.includes('..') || requestPath.includes('/')) {
     res.writeHead(400, {
       'Content-Type': 'text/html'
