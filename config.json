@@ -1,5 +1,6 @@
 {
   "port": 80,
   "fileIDLength": 3,
+  "format": "base62",
   "key": "run `npm run -s generate-key` to get a random key!"
 }

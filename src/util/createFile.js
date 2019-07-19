@@ -1,10 +1,11 @@
 const path = require('path');
 const files = require('./files.js');
-const rand = require('./rand.js');
 const config = require('../../config.json');
 
+const idGenerator = require(`../formats/${config.format}`);
+
 function createFile (ext) {
-  const id = rand(config.fileIDLength);
+  const id = idGenerator(config.fileIDLength);
   if (files.has(id)) {
     return createFile(ext);
   }
