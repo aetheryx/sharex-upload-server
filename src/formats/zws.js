@@ -1,12 +1,14 @@
 const { randomBytes } = require('crypto');
+const zeroWidthChars = [
+  '\u200B',
+  '\u200C',
+  '\u200D',
+  '\u2060',
+  '\uFEFF',
+  '\u180E'
+];
 
-const ZWS_0 = String.fromCharCode(8203);
-const ZWS_1 = String.fromCharCode(6158);
-
-module.exports = (length) =>
-  [ ...randomBytes(Math.ceil(length / 8)) ]
-    .map(byte => byte.toString(2).padStart(8, '0'))
-    .join('')
-    .slice(0, length)
-    .replace(/0/g, ZWS_0)
-    .replace(/1/g, ZWS_1);
+module.exports = (size) =>
+  [ ...randomBytes(size) ]
+    .map(byte => zeroWidthChars[+byte % zeroWidthChars.length])
+    .join('');
