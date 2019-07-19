@@ -4,7 +4,6 @@ const zeroWidthChars = [
   '\u200C',
   '\u200D',
   '\u2060',
-  '\uFEFF',
   '\u180E'
 ];
 
