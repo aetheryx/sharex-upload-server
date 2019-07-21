@@ -1,6 +1,7 @@
 const { randomBytes } = require('crypto');
+const zeroWidthCap = '\u200B';
 const zeroWidthChars = [
-  '\u200B',
+  zeroWidthCap,
   '\u200C',
   '\u200D',
   '\u2060',
@@ -10,4 +11,5 @@ const zeroWidthChars = [
 module.exports = (size) =>
   [ ...randomBytes(size) ]
     .map(byte => zeroWidthChars[+byte % zeroWidthChars.length])
-    .join('');
+    .join('')
+    .slice(1) + zeroWidthCap;
