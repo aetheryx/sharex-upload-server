@@ -27,8 +27,8 @@ The format of the file identifier. There are two options available - `base62` (d
 `zws` is a format inspired by [zws.im](https://zws.im/). The format only contains five possible characters, so you need a higher `fileIDLength` than you would with `base62`. You can calculate `5^n` where `n` is your `fileIDLength` to see how many files you could store. The advantage of this format is that all of the characters are invisible, making it look like the link is just your domain. On the other hand, typing out the URL manually is basically impossible - you _have to_ copy it to share it.
 
 ## Setting up ShareX
-1. Go to [Destinations -> Custom Uploader Settings](https://aeth.dev/b0df61.png)
-2. Press the New button, give the entry a name, and tick [these](https://aeth.dev/519c61.png) destination types
+1. Go to [Destinations -> Custom Uploader Settings](https://aeth.dev/b0df61)
+2. Press the New button, give the entry a name, and tick [these](https://aeth.dev/519c61) destination types
 3. On the Request tab,
     1. Set the method to POST
     2. Enter the URL of your domain
@@ -36,8 +36,8 @@ The format of the file identifier. There are two options available - `base62` (d
     4. Add a header with the key being "Authorization" and the value being your key from the `npm run -s generate-key` command
 
         <sup>End result should look something like [this](https://aeth.dev/7f9d32.png)</sup>
-4. On the Response tab, [set the URL to your domain and then append `$json:.filename$`](https://aeth.dev/613be3.png).
-5. Make sure you [set the Destination entries to their respective "Custom" options](https://aeth.dev/a36337.png).  
+4. On the Response tab, [set the URL to your domain and then append `$json:.filename$`](https://aeth.dev/613be3).
+5. Make sure you [set the Destination entries to their respective "Custom" options](https://aeth.dev/a36337).  
 
 ## Setting up Flameshot
 [Flameshot](https://github.com/lupoDharkael/flameshot) is a popular Linux screenshot tool. Here's a wrapper script that pipes your screenshot directly to the file server:
